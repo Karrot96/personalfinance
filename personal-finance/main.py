@@ -114,14 +114,17 @@ def pull_transactions(client, requisition_id):
     accounts = client.requisition.get_requisition_by_id(
         requisition_id=requisition_id
     )
-
+    transactions = []
     # Get account id from the list.
-    account_id = accounts["accounts"][0]
-
-    # Create account instance and provide your account id from previous step
-    account = client.account_api(id=account_id)
-    # Filter transactions by specific date range
-    transactions = account.get_transactions(date_from=str(datetime.date(datetime.today().replace(day=1))), date_to=str(datetime.date(datetime.today())))
+    print(accounts)
+    for account_id in accounts["accounts"]:
+        # Create account instance and provide your account id from previous step
+        account = client.account_api(id=account_id)
+        print(account.get_metadata())
+        # Fetch details
+        print(account.get_details())
+        # Filter transactions by specific date range
+        transactions+= account.get_transactions(date_from=str(datetime.date(datetime.today().replace(day=1))), date_to=str(datetime.date(datetime.today()))).get("transactions").get("booked")
 
     return transactions
 
@@ -150,7 +153,7 @@ def main():
                 pull_transactions(
                     client,
                     bank["requisition_id"]
-                ).get("transactions").get("booked"),
+                ),
                 bank.get("institution"))
     with open("banks.json", "w") as f:
         json.dump(data, f)
