@@ -13,6 +13,7 @@ from googleapiclient.errors import HttpError
 
 
 
+# API used is here https://nordigen.com/en/?gclid=CjwKCAjwu5yYBhAjEiwAKXk_eLXZ6ijT_EDClBJ2Jy2JzbmrqsGlHbPe8xkjvCrSOBLqHxgWTzPlJRoCpw4QAvD_BwE
 CLIENT_ID = os.environ.get("CLIENT_ID")
 CLIENT_SECRET =  os.environ.get("CLIENT_SECRET")
 # If modifying these scopes, delete the file token.json.
